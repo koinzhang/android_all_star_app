@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_144"
+    android:layout_marginStart="@dimen/dimen_16"
+    android:layout_marginEnd="@dimen/dimen_16"
+    android:layout_marginBottom="@dimen/dimen_16"
+    android:background="@color/purple_200">
+
+    <TextView
+        android:id="@+id/txt_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:ellipsize="end"
+        android:textSize="@dimen/text_24"
+        android:maxLines="1"
+        app:layout_constraintBottom_toTopOf="@id/txt_star_num"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/title_star_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="@string/github_star_num"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_name" />
+
+    <TextView
+        android:id="@+id/txt_star_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_8"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintStart_toEndOf="@id/title_star_num"
+        app:layout_constraintTop_toTopOf="@id/title_star_num" />
+
+    <TextView
+        android:id="@+id/txt_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/dimen_16"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:layout_marginEnd="@dimen/dimen_16"
+        android:ellipsize="end"
+        android:maxLines="3"
+        android:textSize="@dimen/text_12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txt_star_num" />
+</androidx.constraintlayout.widget.ConstraintLayout>
