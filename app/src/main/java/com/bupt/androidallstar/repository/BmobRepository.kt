@@ -14,12 +14,10 @@ import timber.log.Timber
  * @date 2021/04/10
  * @email zyk970512@163.com
  */
-class BmobRepository() {
-
+class BmobRepository {
     /**
      * 获取Bmob中所有推荐开源项目
      */
-
     suspend fun getAllRecommendLibrary(libraryRecommendData: MutableLiveData<MutableList<AndroidLibrary>>) {
         return withContext(Dispatchers.IO) {
             val bombQuery: BmobQuery<AndroidLibrary> = BmobQuery()

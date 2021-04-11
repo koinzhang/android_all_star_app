@@ -8,9 +8,7 @@ import com.bupt.androidallstar.repository.BmobRepository
 import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: BmobRepository) : ViewModel() {
-
     var libraryRecommendData = MutableLiveData<MutableList<AndroidLibrary>>()
-
 
     fun getAllRecommendLibrary() {
         viewModelScope.launch {
@@ -18,3 +16,4 @@ class HomeViewModel(private val repository: BmobRepository) : ViewModel() {
         }
     }
 }
+

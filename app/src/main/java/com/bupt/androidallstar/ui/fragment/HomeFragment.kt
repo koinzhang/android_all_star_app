@@ -9,15 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bupt.androidallstar.databinding.FragmentHomeBinding
-import com.bupt.androidallstar.repository.BmobRepository
 import com.bupt.androidallstar.ui.dapter.AndroidLibraryAdapter
 import com.bupt.androidallstar.viewmodel.HomeViewModel
-import com.bupt.androidallstar.viewmodelfactory.HomeViewModelFactory
 import com.permissionx.guolindev.PermissionX
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
 class HomeFragment : Fragment() {
@@ -25,19 +23,13 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var bmobRepository: BmobRepository
-    private lateinit var homeViewModel: HomeViewModel
-    private lateinit var homeViewModelFactory: HomeViewModelFactory
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        bmobRepository = BmobRepository()
-        homeViewModelFactory = HomeViewModelFactory(bmobRepository)
-        homeViewModel =
-            ViewModelProvider(this, homeViewModelFactory).get(HomeViewModel::class.java)
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         initView()
         initRegister()
@@ -67,6 +59,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRegister() {
+        //ViewModel中的LiveData在视图层中注册监听后，在ViewModel中的数据改变时可以持续收到数据
         homeViewModel.libraryRecommendData.observe(viewLifecycleOwner, {
             Timber.d("t $it")
             (binding.rvAndroidLibrary.adapter as AndroidLibraryAdapter).apply {

@@ -65,8 +65,10 @@ dependencies {
     implementation 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
     // Koin for Kotlin apps
     implementation "org.koin:koin-core:$koin_version"
-    // Testing
+    implementation "org.koin:koin-android:$koin_version"
+    implementation "org.koin:koin-androidx-viewmodel:$koin_version"
     testImplementation "org.koin:koin-test:$koin_version"
+
     //云数据库Bmob
     implementation 'cn.bmob.android:bmob-sdk:3.6.6'
 }
