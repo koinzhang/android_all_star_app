@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.HomeFragment">
+    tools:context=".ui.fragment.HomeFragment"
+    android:background="@color/grey_d8d8d8">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_android_library"

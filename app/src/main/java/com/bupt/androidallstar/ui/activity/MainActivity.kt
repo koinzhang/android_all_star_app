@@ -6,9 +6,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.setupWithNavController
 import com.bupt.androidallstar.R
 import com.bupt.androidallstar.databinding.ActivityMainBinding
+import com.bupt.androidallstar.viewmodel.HomeViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val homeViewModel: HomeViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +24,11 @@ class MainActivity : AppCompatActivity() {
     private fun initView() {
         val navController = findNavController(R.id.nav_host_fragment)
         binding.navView.setupWithNavController(navController)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        homeViewModel.getAllRecommendLibrary()
     }
 
 }

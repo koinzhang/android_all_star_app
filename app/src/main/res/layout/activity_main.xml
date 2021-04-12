@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/dimen_8"
         android:layout_marginEnd="@dimen/dimen_8"
-        android:background="?android:attr/windowBackground"
+        android:background="@drawable/shape_bottom_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"

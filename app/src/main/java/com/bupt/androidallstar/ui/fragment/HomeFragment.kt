@@ -15,15 +15,14 @@ import com.bupt.androidallstar.databinding.FragmentHomeBinding
 import com.bupt.androidallstar.ui.dapter.AndroidLibraryAdapter
 import com.bupt.androidallstar.viewmodel.HomeViewModel
 import com.permissionx.guolindev.PermissionX
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-
-    private val homeViewModel: HomeViewModel by viewModel()
+    private lateinit var homeViewModel: HomeViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,16 +30,12 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        homeViewModel = requireActivity().getViewModel()
         initView()
         initRegister()
         initPermission()
 
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        homeViewModel.getAllRecommendLibrary()
     }
 
     private fun initView() {
