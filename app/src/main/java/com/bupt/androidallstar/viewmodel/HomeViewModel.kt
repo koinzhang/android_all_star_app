@@ -9,10 +9,17 @@ import kotlinx.coroutines.launch
 
 class HomeViewModel(private val repository: BmobRepository) : ViewModel() {
     var libraryRecommendData = MutableLiveData<MutableList<AndroidLibrary>>()
+    var librarySearchLabelData = MutableLiveData<MutableList<AndroidLibrary>>()
 
     fun getAllRecommendLibrary() {
         viewModelScope.launch {
             repository.getAllRecommendLibrary(libraryRecommendData)
+        }
+    }
+
+    fun searchLabelLibrary(searchValue: String) {
+        viewModelScope.launch {
+            repository.searchLabelLibrary(searchValue, librarySearchLabelData)
         }
     }
 }

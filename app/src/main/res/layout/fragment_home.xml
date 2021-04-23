@@ -4,8 +4,39 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.fragment.HomeFragment"
-    android:background="@color/grey_d8d8d8">
+    tools:context=".ui.fragment.HomeFragment">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/android_all_star"
+        android:textStyle="bold"
+        android:layout_marginTop="@dimen/dimen_4"/>
+
+    <LinearLayout
+        android:id="@+id/ll_search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_8"
+        android:background="@drawable/shape_search"
+        android:gravity="center"
+        android:padding="@dimen/dimen_4">
+
+        <ImageView
+            android:id="@+id/img_search"
+            android:layout_width="@dimen/dimen_16"
+            android:layout_height="@dimen/dimen_16"
+            android:src="@mipmap/ic_search" />
+
+        <TextView
+            android:id="@+id/txt_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dimen_4"
+            android:text="@string/search"
+            android:textSize="@dimen/text_16" />
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_android_library"
