@@ -37,7 +37,7 @@ class BmobRepository {
     }
 
     /**
-     * 获取Bmob中所有推荐开源项目
+     * 根据标签查询Bmob中特定开源项目
      */
     suspend fun searchLabelLibrary(
         searchValue: String,
@@ -64,6 +64,34 @@ class BmobRepository {
                         Timber.d("Bmob exception $ex")
                     }
                 }
+            })
+        }
+    }
+
+    /**
+     * 查询Bmob中所有一级二级标签
+     */
+    suspend fun getAllLabel(librarySearchData: MutableLiveData<MutableList<String>>) {
+        return withContext(Dispatchers.IO) {
+            val bombQuery: BmobQuery<AndroidLibrary> = BmobQuery()
+            //开启缓存查询
+            bombQuery.cachePolicy = BmobQuery.CachePolicy.CACHE_ELSE_NETWORK;
+            bombQuery.addQueryKeys("kindFirst,kindSecond")
+            bombQuery.findObjects(object : FindListener<AndroidLibrary>() {
+                override fun done(data: MutableList<AndroidLibrary>?, ex: BmobException?) =
+                    if (ex == null) {
+                        Timber.d("Bmob find success")
+                        //取出重复数据
+                        val set = mutableSetOf<String>()
+                        for (i in data!!) {
+                            set.add(i.kindFirst!!)
+                            set.add(i.kindSecond!!)
+                        }
+                        librarySearchData.value = set.toMutableList()
+                    } else {
+                        Timber.d("Bmob exception $ex")
+                    }
+
             })
         }
     }

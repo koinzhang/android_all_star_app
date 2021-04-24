@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bupt.androidallstar.R
 import com.bupt.androidallstar.databinding.FragmentHomeBinding
-import com.bupt.androidallstar.ui.dapter.AndroidLibraryAdapter
+import com.bupt.androidallstar.ui.adapter.AndroidLibraryAdapter
 import com.bupt.androidallstar.viewmodel.HomeViewModel
 import com.permissionx.guolindev.PermissionX
 import org.koin.androidx.viewmodel.ext.android.getViewModel

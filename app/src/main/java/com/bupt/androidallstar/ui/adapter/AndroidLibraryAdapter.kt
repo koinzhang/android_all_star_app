@@ -1,4 +1,4 @@
-package com.bupt.androidallstar.ui.dapter
+package com.bupt.androidallstar.ui.adapter
 
 import com.bupt.androidallstar.R
 import com.bupt.androidallstar.data.AndroidLibrary

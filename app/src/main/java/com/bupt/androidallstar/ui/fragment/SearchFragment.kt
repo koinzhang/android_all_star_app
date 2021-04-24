@@ -3,18 +3,20 @@ package com.bupt.androidallstar.ui.fragment
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
-import android.view.inputmethod.EditorInfo
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import androidx.transition.TransitionInflater
 import com.bupt.androidallstar.R
 import com.bupt.androidallstar.databinding.FragmentSearchBinding
-import com.bupt.androidallstar.ui.dapter.AndroidLibraryAdapter
-import com.bupt.androidallstar.utils.Tools
+import com.bupt.androidallstar.ui.adapter.AndroidLibraryAdapter
+import com.bupt.androidallstar.ui.adapter.LabelAdapter
 import com.bupt.androidallstar.viewmodel.HomeViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
@@ -51,6 +53,18 @@ class SearchFragment : Fragment() {
         ViewCompat.setTransitionName(binding.imgSearch, "search_start_img")
         ViewCompat.setTransitionName(binding.edtSearch, "search_start_txt")
 
+        homeViewModel.getAllLabel()
+
+        binding.rvAllLabel.apply {
+            layoutManager = StaggeredGridLayoutManager(6, RecyclerView.VERTICAL)
+            adapter = LabelAdapter(mutableListOf())
+            (adapter as LabelAdapter).setOnItemClickListener { adapter, _, position ->
+                Timber.d("click $position")
+                homeViewModel.searchLabelLibrary((adapter as LabelAdapter).data[position])
+                binding.edtSearch.text = (adapter as LabelAdapter).data[position]
+            }
+        }
+
         binding.rvAndroidLibrary.apply {
             layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
             adapter = AndroidLibraryAdapter(mutableListOf())
@@ -63,25 +77,37 @@ class SearchFragment : Fragment() {
             }
         }
 
+        binding.imgDelete.setOnClickListener {
+            it.visibility = View.INVISIBLE
+            binding.apply {
+                edtSearch.text = ""
+                rvAndroidLibrary.visibility = View.INVISIBLE
+                rvAllLabel.visibility = View.VISIBLE
+            }
+        }
         binding.txtCancel.setOnClickListener {
-            Tools.hideKeyboard(it)
             it.findNavController().navigateUp()
         }
-        // TODO: 4/23/21 显示隐藏软键盘
-        binding.edtSearch.setOnEditorActionListener { v, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.keyCode == KeyEvent.KEYCODE_SEARCH)) {
-                homeViewModel.searchLabelLibrary("${v.text}")
-                return@setOnEditorActionListener true
-            }
-            return@setOnEditorActionListener false
-        }
-        binding.edtSearch.requestFocus()
     }
 
     private fun initRegister() {
         //ViewModel中的LiveData在视图层中注册监听后，在ViewModel中的数据改变时可以持续收到数据
+        homeViewModel.allLabelData.observe(viewLifecycleOwner, {
+            Timber.d("allLabelData $it")
+            //初始化标签
+            (binding.rvAllLabel.adapter as LabelAdapter).apply {
+                data = it
+                notifyDataSetChanged()
+            }
+        })
+
         homeViewModel.librarySearchLabelData.observe(viewLifecycleOwner, {
-            Timber.d("t $it")
+            Timber.d("librarySearchLabelData $it")
+            binding.apply {
+                rvAllLabel.visibility = View.INVISIBLE
+                rvAndroidLibrary.visibility = View.VISIBLE
+                imgDelete.visibility = View.VISIBLE
+            }
             (binding.rvAndroidLibrary.adapter as AndroidLibraryAdapter).apply {
                 data = it
                 notifyDataSetChanged()
