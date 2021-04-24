@@ -38,7 +38,6 @@ class HomeFragment : Fragment() {
         initPermission()
         initView()
         initRegister()
-
         return binding.root
     }
 
@@ -58,11 +57,13 @@ class HomeFragment : Fragment() {
         ViewCompat.setTransitionName(binding.llSearchBar, "search_enter")
         ViewCompat.setTransitionName(binding.imgSearch, "search_enter_img")
         ViewCompat.setTransitionName(binding.txtSearch, "search_enter_txt")
+        ViewCompat.setTransitionName(binding.txtCancel, "search_enter_cancel_txt")
 
         val extras = FragmentNavigatorExtras(
             binding.llSearchBar to "search_start",
             binding.imgSearch to "search_start_img",
-            binding.txtSearch to "search_start_txt"
+            binding.txtSearch to "search_start_txt",
+            binding.txtCancel to "search_start_cancel_txt"
         )
 
         binding.llSearchBar.setOnClickListener {

@@ -30,6 +30,7 @@ class SearchFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requireActivity().window.sharedElementsUseOverlay = false
         sharedElementEnterTransition =
             TransitionInflater.from(requireContext()).inflateTransition(R.transition.slide)
         sharedElementReturnTransition =
@@ -52,6 +53,7 @@ class SearchFragment : Fragment() {
         ViewCompat.setTransitionName(binding.llSearchBar, "search_start")
         ViewCompat.setTransitionName(binding.imgSearch, "search_start_img")
         ViewCompat.setTransitionName(binding.edtSearch, "search_start_txt")
+        ViewCompat.setTransitionName(binding.txtCancel, "search_start_cancel_txt")
 
         homeViewModel.getAllLabel()
 
@@ -86,6 +88,8 @@ class SearchFragment : Fragment() {
             }
         }
         binding.txtCancel.setOnClickListener {
+            binding.rvAllLabel.visibility=View.INVISIBLE
+            binding.rvAndroidLibrary.visibility=View.INVISIBLE
             it.findNavController().navigateUp()
         }
     }
