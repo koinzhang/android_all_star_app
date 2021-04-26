@@ -7,7 +7,7 @@ import cn.bmob.v3.BmobObject
  * @date 2021/04/10
  * @email zyk970512@163.com
  */
-class AndroidLibrary : BmobObject() {
+class AndroidLibrary : BmobObject(){
     var name: String? = null
     var starNum: String? = null
     var description: String? = null

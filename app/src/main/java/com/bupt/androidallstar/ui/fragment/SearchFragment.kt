@@ -88,8 +88,8 @@ class SearchFragment : Fragment() {
             }
         }
         binding.txtCancel.setOnClickListener {
-            binding.rvAllLabel.visibility=View.INVISIBLE
-            binding.rvAndroidLibrary.visibility=View.INVISIBLE
+            binding.rvAllLabel.visibility = View.INVISIBLE
+            binding.rvAndroidLibrary.visibility = View.INVISIBLE
             it.findNavController().navigateUp()
         }
     }
