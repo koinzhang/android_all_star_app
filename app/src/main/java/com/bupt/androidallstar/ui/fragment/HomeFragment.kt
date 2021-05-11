@@ -15,9 +15,11 @@ import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bupt.androidallstar.R
+import com.bupt.androidallstar.database.entity.AndroidLibraryEntity
 import com.bupt.androidallstar.databinding.FragmentHomeBinding
 import com.bupt.androidallstar.ui.adapter.AndroidLibraryAdapter
-import com.bupt.androidallstar.viewmodel.HomeViewModel
+import com.bupt.androidallstar.utils.CommonUtils.showToast
+import com.bupt.androidallstar.viewmodel.MainViewModel
 import com.permissionx.guolindev.PermissionX
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
@@ -26,7 +28,7 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,7 +36,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        homeViewModel = requireActivity().getViewModel()
+        mainViewModel = requireActivity().getViewModel()
         initPermission()
         initView()
         initRegister()
@@ -51,6 +53,20 @@ class HomeFragment : Fragment() {
                 intent.data =
                     Uri.parse((adapter as AndroidLibraryAdapter).data[position].githubUrl);//此处填链接
                 startActivity(intent);
+            }
+            (adapter as AndroidLibraryAdapter).setOnItemLongClickListener { adapter, view, position ->
+                val itemData = (adapter as AndroidLibraryAdapter).data[position]
+                val data = AndroidLibraryEntity(
+                    0,
+                    itemData.name,
+                    itemData.starNum,
+                    itemData.description,
+                    itemData.githubUrl,
+                    itemData.kindFirst,
+                    itemData.kindSecond
+                )
+                mainViewModel.insert(data)
+                true
             }
         }
         //设置共享元素过渡名称
@@ -80,11 +96,17 @@ class HomeFragment : Fragment() {
 
     private fun initRegister() {
         //ViewModel中的LiveData在视图层中注册监听后，在ViewModel中的数据改变时可以持续收到数据
-        homeViewModel.libraryRecommendData.observe(viewLifecycleOwner, {
+        mainViewModel.libraryRecommendData.observe(viewLifecycleOwner, {
             Timber.d("t $it")
             (binding.rvAndroidLibrary.adapter as AndroidLibraryAdapter).apply {
                 data = it
                 notifyDataSetChanged()
+            }
+        })
+
+        mainViewModel.insertFlag.observe(viewLifecycleOwner,{
+            if(it){
+                requireContext().showToast("收藏成功！")
             }
         })
     }

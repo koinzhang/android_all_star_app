@@ -5,7 +5,10 @@ import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.bupt.androidallstar.data.AndroidLibrary
+import com.bupt.androidallstar.database.dao.AndroidLibraryDao
+import com.bupt.androidallstar.database.entity.AndroidLibraryEntity
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 
@@ -14,7 +17,18 @@ import timber.log.Timber
  * @date 2021/04/10
  * @email zyk970512@163.com
  */
-class BmobRepository {
+class MainRepository(private val androidLibraryDao: AndroidLibraryDao) {
+
+    val allLibrary: Flow<List<AndroidLibraryEntity>> = androidLibraryDao.getAll()
+
+    suspend fun insert(androidLibraryEntity: AndroidLibraryEntity): Boolean {
+        return withContext(Dispatchers.IO) {
+            androidLibraryDao.insertAll(androidLibraryEntity)
+            Timber.d("androidLibraryDao insert success")
+            true
+        }
+    }
+
     /**
      * 获取Bmob中所有推荐开源项目
      */

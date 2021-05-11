@@ -17,7 +17,7 @@ import com.bupt.androidallstar.R
 import com.bupt.androidallstar.databinding.FragmentSearchBinding
 import com.bupt.androidallstar.ui.adapter.AndroidLibraryAdapter
 import com.bupt.androidallstar.ui.adapter.LabelAdapter
-import com.bupt.androidallstar.viewmodel.HomeViewModel
+import com.bupt.androidallstar.viewmodel.MainViewModel
 import org.koin.androidx.viewmodel.ext.android.getViewModel
 import timber.log.Timber
 
@@ -25,7 +25,7 @@ import timber.log.Timber
 class SearchFragment : Fragment() {
     private var _binding: FragmentSearchBinding? = null
     private val binding get() = _binding!!
-    private lateinit var homeViewModel: HomeViewModel
+    private lateinit var mainViewModel: MainViewModel
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,7 +42,7 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentSearchBinding.inflate(layoutInflater, container, false)
-        homeViewModel = requireActivity().getViewModel()
+        mainViewModel = requireActivity().getViewModel()
         initView()
         initRegister()
         return binding.root
@@ -55,14 +55,14 @@ class SearchFragment : Fragment() {
         ViewCompat.setTransitionName(binding.edtSearch, "search_start_txt")
         ViewCompat.setTransitionName(binding.txtCancel, "search_start_cancel_txt")
 
-        homeViewModel.getAllLabel()
+        mainViewModel.getAllLabel()
 
         binding.rvAllLabel.apply {
             layoutManager = StaggeredGridLayoutManager(6, RecyclerView.VERTICAL)
             adapter = LabelAdapter(mutableListOf())
             (adapter as LabelAdapter).setOnItemClickListener { adapter, _, position ->
                 Timber.d("click $position")
-                homeViewModel.searchLabelLibrary((adapter as LabelAdapter).data[position])
+                mainViewModel.searchLabelLibrary((adapter as LabelAdapter).data[position])
                 binding.edtSearch.text = (adapter as LabelAdapter).data[position]
             }
         }
@@ -96,7 +96,7 @@ class SearchFragment : Fragment() {
 
     private fun initRegister() {
         //ViewModel中的LiveData在视图层中注册监听后，在ViewModel中的数据改变时可以持续收到数据
-        homeViewModel.allLabelData.observe(viewLifecycleOwner, {
+        mainViewModel.allLabelData.observe(viewLifecycleOwner, {
             Timber.d("allLabelData $it")
             //初始化标签
             (binding.rvAllLabel.adapter as LabelAdapter).apply {
@@ -105,7 +105,7 @@ class SearchFragment : Fragment() {
             }
         })
 
-        homeViewModel.librarySearchLabelData.observe(viewLifecycleOwner, {
+        mainViewModel.librarySearchLabelData.observe(viewLifecycleOwner, {
             Timber.d("librarySearchLabelData $it")
             binding.apply {
                 rvAllLabel.visibility = View.INVISIBLE

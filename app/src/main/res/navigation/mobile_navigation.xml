@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/navigation_home"
         android:name="com.bupt.androidallstar.ui.fragment.HomeFragment"
-        android:label="@string/title_home"
+        android:label="@string/title_library"
         tools:layout="@layout/fragment_home" >
         <action
             android:id="@+id/action_navigation_home_to_searchFragment"
@@ -18,14 +18,14 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.bupt.androidallstar.ui.fragment.DashboardFragment"
-        android:label="@string/title_dashboard"
+        android:label="@string/title_github"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.bupt.androidallstar.ui.fragment.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:name="com.bupt.androidallstar.ui.fragment.CollectFragment"
+        android:label="@string/title_collect"
+        tools:layout="@layout/fragment_collect" />
     <fragment
         android:id="@+id/searchFragment"
         android:name="com.bupt.androidallstar.ui.fragment.SearchFragment"
